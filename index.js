@@ -1,11 +1,13 @@
 const express = require("express");
+const connectDB = require("./config/db");
+
 const app = express();
+
+connectDB();
+
+app.use(express.json({ extended: false }));
+
+app.use("/api/reviews", require("./routes/reviewRoutes"));
+
 const PORT = process.env.PORT || 5000;
-
-app.get("/", (req, res) => {
-  res.send("Layover Look API");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
